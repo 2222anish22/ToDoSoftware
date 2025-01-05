@@ -29,8 +29,9 @@
         <div class="mb-3">
             <input type="text" id="taskInput" class="form-control" placeholder="Enter a new task">
         </div>
-        <div class="text-center">
+        <div class="text-center mb-3">
             <button id="addTaskButton" class="btn btn-primary">Add Task</button>
+            <button id="deleteAllButton" class="btn btn-danger">Delete All</button>
         </div>
         <ul id="taskList" class="list-group mt-4">
             <!-- Tasks will be added here dynamically -->
@@ -41,6 +42,7 @@
         // Select elements
         const taskInput = document.getElementById('taskInput');
         const addTaskButton = document.getElementById('addTaskButton');
+        const deleteAllButton = document.getElementById('deleteAllButton');
         const taskList = document.getElementById('taskList');
 
         // Task data (array of tasks)
@@ -115,6 +117,15 @@
             renderTasks();
         }
 
+        // Delete all tasks
+        function deleteAllTasks() {
+            if (confirm('Are you sure you want to delete all tasks?')) {
+                tasks = [];
+                saveTasks();
+                renderTasks();
+            }
+        }
+
         // Save tasks to localStorage
         function saveTasks() {
             localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -122,6 +133,7 @@
 
         // Event listeners
         addTaskButton.addEventListener('click', addTask);
+        deleteAllButton.addEventListener('click', deleteAllTasks);
         taskInput.addEventListener('keypress', event => {
             if (event.key === 'Enter') {
                 addTask();
